@@ -24,8 +24,8 @@ import './app.css'
 
 	onDelete = key => {
 		console.log(key);
-		this.setState(({ data}) => {
-			const newArr = data.filter((el, index)=> index !== key)
+		this.setState(({data}) => {
+			const newArr = data.filter((e, index)=> index !== key)
 			console.log(data);
 			return{
 				data: newArr,
@@ -33,6 +33,11 @@ import './app.css'
 		})
 	}
 
+	addForm = item => {
+		this.setState(({data}) => ({
+			data: [...data, {...item, favourite: false, like: false,}]
+		}))
+	}
 	
 
 	render(){
@@ -47,7 +52,7 @@ import './app.css'
 						<AppFilter />
 					</div>
 					<MovieList data={data} onDelete={this.onDelete}/>
-					<MoviesAddForm />
+					<MoviesAddForm addForm={this.addForm}/>
 				</div>
 			</div>
 		)
