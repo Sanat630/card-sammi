@@ -11,19 +11,18 @@ import './app.css'
 		super(props)
 		this.state = {
 			data: [ 
-				{ name: "Empire of Osman!",viewers: 988, favourite: false,},
-				{ name: "Olymp has fallen",viewers: 100, favourite: false},
-				{ name: "Avengers",viewers: 100, favourite: true},
-				{ name: "Empire of Osman",viewers: 988, favourite: false},
-				{ name: "Olymp has fallen",viewers: 100, favourite: false},
-				{ name: "Avengers",viewers: 100, favourite: true},
+				{ name: "Empire of Osman!",viewers: 988, favourite: false,like: false,},
+				{ name: "Olymp has fallen",viewers: 100, favourite: false,like: false,},
+				{ name: "Avengers",viewers: 100, favourite: false, like: false,},
+				{ name: "Empire of Osman",viewers: 988, favourite: false, like: false,},
+				{ name: "Olymp has fallen",viewers: 100, favourite: false,like: true,},
+				{ name: "Avengers",viewers: 100, favourite: false ,like: false,},
 			],
 		}
 	}
 	
 
 	onDelete = key => {
-		console.log(key);
 		this.setState(({data}) => {
 			const newArr = data.filter((e, index)=> index !== key)
 			console.log(data);
@@ -34,11 +33,33 @@ import './app.css'
 	}
 
 	addForm = item => {
+		const newItem = { 
+			name: item.name,
+			viewers: item.viewers,
+			id: item.index,
+			favourite: false, 
+			like: false,
+		};
 		this.setState(({data}) => ({
-			data: [...data, {...item, favourite: false, like: false,}]
+			data: [...data, {newItem}]
 		}))
 	}
 	
+	onToggleProp = (key, prop) => {
+		console.log(prop);
+		this.setState(({data}) => {
+			const newArr = data.map((item, index) => {
+				if (index === key){
+					return{ ...item, [prop]: !item[prop]}
+				}
+				return item
+			})
+			return {
+				data:newArr,
+			}
+		})
+	}
+
 
 	render(){
 		const { data } = this.state
@@ -51,7 +72,10 @@ import './app.css'
 						<SearchPanel />
 						<AppFilter />
 					</div>
-					<MovieList data={data} onDelete={this.onDelete}/>
+					<MovieList 
+					onToggleProp={this.onToggleProp}  
+					data={data} 
+					onDelete={this.onDelete}/>
 					<MoviesAddForm addForm={this.addForm}/>
 				</div>
 			</div>

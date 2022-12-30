@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import './movies-add-form.css'
-import { render } from '@testing-library/react'
+
 
 class MoviesAddForm extends Component{
 	constructor(props){
