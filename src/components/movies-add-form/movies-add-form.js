@@ -24,6 +24,7 @@ class MoviesAddForm extends Component{
 		this.setState({
 			name: '',
 			views: '',
+			key: this.state.index,
 		})
 	}
 

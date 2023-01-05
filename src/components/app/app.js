@@ -36,12 +36,13 @@ import './app.css'
 		const newItem = { 
 			name: item.name,
 			viewers: item.viewers,
-			id: item.index,
+			key: item.index, 
 			favourite: false, 
 			like: false,
 		};
+		console.log(newItem);
 		this.setState(({data}) => ({
-			data: [...data, {newItem}]
+			data: [...data, newItem]
 		}))
 	}
 	
@@ -62,12 +63,14 @@ import './app.css'
 
 
 	render(){
-		const { data } = this.state
+		const { data, index } = this.state
+		const allMoviesCount = data.length
+		const favouriteMovies = data.filter(c => c.favourite).length
 
 		return (
 			<div className='app font-monospace'>
 				<div className='content'>
-					<AppInfo />
+					<AppInfo allMoviesCount={allMoviesCount} favouriteMovies={favouriteMovies}/>
 					<div className='search-panel'>
 						<SearchPanel />
 						<AppFilter />
