@@ -18,6 +18,7 @@ import './app.css'
 				{ name: "Olymp has fallen",viewers: 100, favourite: false,like: true,},
 				{ name: "Avengers",viewers: 100, favourite: false ,like: false,},
 			],
+			term:'',
 		}
 	}
 	
@@ -60,21 +61,32 @@ import './app.css'
 		})
 	}
 
+	searchHandler = (arr, term) => {
+		if (term.length === 0){
+			return arr
+		}
+		
+		return arr.filter(item => item.name.toLowerCase().indexOf(term) > -1)
+	}
+
+	updateTermHandler = term => this.setState({ term })
+
 	render(){
-		const { data, } = this.state
+		const { data, term } = this.state
 		const allMoviesCount = data.length
 		const favouriteMovies = data.filter(c => c.favourite).length
+		const visibleData = this.searchHandler(data, term)
 		return (
 			<div className='app font-monospace'>
 				<div className='content'>
 					<AppInfo allMoviesCount={allMoviesCount} favouriteMovies={favouriteMovies}/>
 					<div className='search-panel'>
-						<SearchPanel />
+						<SearchPanel updateTermHandler={this.updateTermHandler}/>
 						<AppFilter />
 					</div>
 					<MovieList 
 					onToggleProp={this.onToggleProp}  
-					data={data} 
+					data={visibleData} 
 					onDelete={this.onDelete}/>
 					<MoviesAddForm addForm={this.addForm}/>
 				</div>
