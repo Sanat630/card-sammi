@@ -1,4 +1,4 @@
-import { Component, setState, state } from 'react'
+import { Component} from 'react'
 import AppFilter from '../app-filter/app-filter'
 import AppInfo from '../app-info/app-info'
 import MovieList from '../movie-list/movie-list'
@@ -21,7 +21,6 @@ import './app.css'
 		}
 	}
 	
-
 	onDelete = key => {
 		this.setState(({data}) => {
 			const newArr = data.filter((e, index)=> index !== key)
@@ -61,12 +60,10 @@ import './app.css'
 		})
 	}
 
-
 	render(){
-		const { data, index } = this.state
+		const { data, } = this.state
 		const allMoviesCount = data.length
 		const favouriteMovies = data.filter(c => c.favourite).length
-
 		return (
 			<div className='app font-monospace'>
 				<div className='content'>
