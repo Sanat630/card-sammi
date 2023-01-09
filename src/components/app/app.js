@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import AppFilter from '../app-filter/app-filter'
 import AppInfo from '../app-info/app-info'
 import MovieList from '../movie-list/movie-list'
@@ -8,14 +8,7 @@ import './app.css'
 
 
 const App = () =>{
-	const [data, setData] = useState([
-		{ name: "Empire of Osman!",viewers: 988, favourite: false,like: false,},
-		{ name: "Olymp has fallen",viewers: 300, favourite: false,like: false,},
-		{ name: "Avengers",viewers: 150, favourite: false, like: false,},
-		{ name: "Empire",viewers: 801, favourite: false, like: false,},
-		{ name: "Olymp",viewers: 400, favourite: false,like: true,},
-		{ name: "Avengers:Endgame",viewers: 200, favourite: false ,like: false,},
-	])
+	const [data, setData] = useState([])
 	const [term, setTerm] = useState('')
 	const [filter, setFilter] = useState('all')
 
@@ -68,6 +61,22 @@ const App = () =>{
 
 	const updateFilterHandler = filter => setFilter(filter)
 
+	useEffect (() => {
+		fetch('https://jsonplaceholder.typicode.com/todos/?_start=0&_limit=10')
+		.then(response => response.json())
+		.then(json => {
+			const newArr = json.map((item, key) => ({
+			name: item.title, 
+			id: key,
+			viewers: key * 25, 
+			favourite: false,
+			like: false,
+		}))
+		setData(newArr)
+		console.log(newArr);
+	})
+	.catch(err => console.log(err))
+},[])
 	return (
      	<div className='app font-monospace'>
      		<div className='content'>
@@ -87,6 +96,7 @@ const App = () =>{
 }
 
 export default App
+
 
 
 
